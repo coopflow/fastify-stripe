@@ -68,21 +68,21 @@ test('Should create a new stripe customer with a singular Stripe instance', t =>
     version: '2019-02-19'
   })
 
-  fastify.ready(async errors => {
+  fastify.ready(errors => {
     t.error(errors)
 
     t.ok(fastify.stripe)
     t.ok(fastify.stripe.customers)
 
-    try {
-      const customers = await fastify.stripe.customers.create({ email: 'demo@demo.tld' })
+    fastify.stripe.customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
+      if (err) {
+        t.fail()
+      }
 
       t.type(customers, 'object')
       t.strictEqual(customers.object, 'customer')
       t.pass()
-    } catch (err) {
-      t.fail()
-    }
+    })
 
     fastify.close()
   })
@@ -105,31 +105,30 @@ test('Should create a new stripe customer with multiple named Stripe instance', 
       timeout: 20000
     })
 
-  fastify.ready(async errors => {
+  fastify.ready(errors => {
     t.error(errors)
 
     t.ok(fastify.stripe)
     t.ok(fastify.stripe.test.customers)
 
-    try {
-      const customers = await fastify.stripe.test.customers.create({ email: 'demo@demo.tld' })
+    fastify.stripe.test.customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
+      if (err) {
+        t.fail()
+      }
+      t.type(customers, 'object')
+      t.strictEqual(customers.object, 'customer')
+      t.pass()
+    })
+
+    fastify.stripe.prod.customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
+      if (err) {
+        t.fail()
+      }
 
       t.type(customers, 'object')
       t.strictEqual(customers.object, 'customer')
       t.pass()
-    } catch (err) {
-      t.fail()
-    }
-
-    try {
-      const customers = await fastify.stripe.prod.customers.create({ email: 'demo@demo.tld' })
-
-      t.type(customers, 'object')
-      t.strictEqual(customers.object, 'customer')
-      t.pass()
-    } catch (err) {
-      t.fail()
-    }
+    })
 
     fastify.close()
   })
