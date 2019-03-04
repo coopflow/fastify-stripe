@@ -1,5 +1,6 @@
 # fastify-stripe
 
+[![NPM version](https://img.shields.io/npm/v/fastify-stripe.svg?style=flat)](https://www.npmjs.com/package/fastify-stripe)
 [![Build Status](https://travis-ci.com/coopflow/fastify-stripe.svg?branch=master)](https://travis-ci.com/coopflow/fastify-stripe)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
