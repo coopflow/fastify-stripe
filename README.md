@@ -66,8 +66,7 @@ fastify.get('/customers/add', function (request, reply) {
   const email = 'customer@exemple.com'
 
   // We create a new customer using Stripe API
-  stripe.customers.create({ email })
-  function (err, customers) {
+  stripe.customers.create({ email }, function (err, customers) {
     if (err) {
       reply
         .code(500)
@@ -187,8 +186,7 @@ See the [Node Stripe API docs](https://stripe.com/docs/api/node#intro).
 
 ## Acknowledgements
 
-This project is kindly sponsored by:
-* [coopflow](https://www.coopflow.com)
+This project is kindly sponsored by [coopflow](https://www.coopflow.com).
 
 
 ## License
