@@ -1,6 +1,6 @@
 {
   "name": "fastify-stripe",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Stripe Node.js Library instance initialization and encapsulation in fastify framework",
   "main": "plugin.js",
   "scripts": {
@@ -19,10 +19,11 @@
     "url": "git+ssh://git@github.com/coopflow/fastify-stripe.git"
   },
   "keywords": [
+    "credit-cards",
     "fastify",
-    "stripe",
-    "payment processing",
-    "credit cards"
+    "fastify-plugin",
+    "payment-processing",
+    "stripe"
   ],
   "author": "Jean-Michel Coghe <jean.michel.coghe@coopflow.com>",
   "license": "MIT",
