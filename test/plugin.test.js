@@ -56,6 +56,85 @@ test('fastify.stripe.test namespace should exist', t => {
   })
 })
 
+test('Should create a new stripe customer with a singular Stripe instance', t => {
+  t.plan(6)
+
+  const fastify = Fastify()
+
+  fastify.register(fastifyStripe, {
+    api_key: process.env.STRIPE_TEST_API_KEY,
+    maxNetworkRetries: 3,
+    timeout: 20000,
+    version: '2019-02-19'
+  })
+
+  fastify.ready(async errors => {
+    t.error(errors)
+
+    t.ok(fastify.stripe)
+    t.ok(fastify.stripe.customers)
+
+    try {
+      const customers = await fastify.stripe.customers.create({ email: 'demo@demo.tld' })
+
+      t.type(customers, 'object')
+      t.strictEqual(customers.object, 'customer')
+      t.pass()
+    } catch (err) {
+      t.fail()
+    }
+
+    fastify.close()
+  })
+})
+
+test('Should create a new stripe customer with multiple named Stripe instance', t => {
+  t.plan(9)
+
+  const fastify = Fastify()
+
+  fastify
+    .register(fastifyStripe, {
+      name: 'prod',
+      api_key: process.env.STRIPE_TEST_API_KEY
+    })
+    .register(fastifyStripe, {
+      name: 'test',
+      api_key: process.env.STRIPE_TEST_API_KEY,
+      maxNetworkRetries: 3,
+      timeout: 20000
+    })
+
+  fastify.ready(async errors => {
+    t.error(errors)
+
+    t.ok(fastify.stripe)
+    t.ok(fastify.stripe.test.customers)
+
+    try {
+      const customers = await fastify.stripe.test.customers.create({ email: 'demo@demo.tld' })
+
+      t.type(customers, 'object')
+      t.strictEqual(customers.object, 'customer')
+      t.pass()
+    } catch (err) {
+      t.fail()
+    }
+
+    try {
+      const customers = await fastify.stripe.prod.customers.create({ email: 'demo@demo.tld' })
+
+      t.type(customers, 'object')
+      t.strictEqual(customers.object, 'customer')
+      t.pass()
+    } catch (err) {
+      t.fail()
+    }
+
+    fastify.close()
+  })
+})
+
 test('fastify.stripe.test should throw with duplicate connection names', t => {
   t.plan(1)
 
