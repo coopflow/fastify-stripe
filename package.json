@@ -1,7 +1,7 @@
 {
   "name": "fastify-stripe",
-  "version": "0.0.1",
-  "description": "A Fastify plugin that encapsulate Stripe SDK",
+  "version": "0.1.0",
+  "description": "Stripe Node.js Library instance initialization and encapsulation in fastify framework",
   "main": "plugin.js",
   "scripts": {
     "lint": "npm run lint:standard",
