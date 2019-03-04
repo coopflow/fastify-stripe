@@ -5,7 +5,7 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 [![Greenkeeper badge](https://badges.greenkeeper.io/coopflow/fastify-stripe.svg)](https://greenkeeper.io/)
 
-[Stripe Node.js Library](https://github.com/stripe/stripe-node) instance initialization and encapsulation in fastify framework.
+[Stripe Node.js Library](https://github.com/stripe/stripe-node) instance initialization and encapsulation in [fastify](https://github.com/fastify/fastify) framework.
 
 ## Install
 
