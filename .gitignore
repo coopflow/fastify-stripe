@@ -59,3 +59,18 @@ typings/
 
 # next.js build output
 .next
+
+# 0x
+.__browserify_string_empty.js
+profile-*
+
+# JetBrains IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# lock files
+package-lock.json
+yarn.lock
