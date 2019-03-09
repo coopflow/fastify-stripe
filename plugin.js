@@ -11,7 +11,8 @@ function fastifyStripe (fastify, options, next) {
 
   stripe.setAppInfo({
     name: 'fastify-stripe',
-    url: 'https://github.com/coopflow/fastify-stripe'
+    url: 'https://github.com/coopflow/fastify-stripe',
+    version: require('./package.json').version
   })
 
   if (options.maxNetworkRetries) {

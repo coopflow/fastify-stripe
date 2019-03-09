@@ -1,6 +1,6 @@
 {
   "name": "fastify-stripe",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Stripe Node.js Library instance initialization and encapsulation in fastify framework",
   "main": "plugin.js",
   "scripts": {
@@ -37,11 +37,11 @@
   "devDependencies": {
     "coveralls": "^3.0.3",
     "dotenv": "^6.2.0",
-    "fastify": "^2.0.0",
+    "fastify": "^2.0.1",
     "snazzy": "^8.0.0",
     "standard": "^12.0.1",
     "stripe": "*",
-    "tap": "^12.5.3"
+    "tap": "^12.6.0"
   },
   "dependencies": {
     "fastify-plugin": "^1.5.0"

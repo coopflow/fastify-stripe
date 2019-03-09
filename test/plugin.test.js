@@ -111,7 +111,7 @@ test('Should create a new stripe customer with multiple named Stripe instance', 
     t.ok(fastify.stripe)
     t.ok(fastify.stripe.test.customers)
 
-    fastify.stripe.test.customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
+    fastify.stripe['test'].customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
       if (err) {
         t.fail()
       }
@@ -120,15 +120,13 @@ test('Should create a new stripe customer with multiple named Stripe instance', 
       t.pass()
     })
 
-    fastify.stripe.prod.customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
-      if (err) {
-        t.fail()
-      }
-
-      t.type(customers, 'object')
-      t.strictEqual(customers.object, 'customer')
-      t.pass()
-    })
+    fastify.stripe.prod.customers.create({ email: 'demo@demo.tld' })
+      .then(customers => {
+        t.type(customers, 'object')
+        t.strictEqual(customers.object, 'customer')
+        t.pass()
+      })
+      .catch(() => t.fail())
 
     fastify.close()
   })

@@ -73,7 +73,7 @@ fastify.get('/customers/add', function (request, reply) {
         .code(500)
         .send(errors)
     }
-    
+
     reply
       .code(201)
       .send({
@@ -92,6 +92,43 @@ fastify.listen(3000, function (err) {
 })
 ```
 
+and it works using `Promises` too:
+```js
+const fastify = require('fastify')({ logger: true })
+
+fastify.register(require('fastify-stripe'), {
+  api_key: 'sk_test_...'
+})
+
+fastify.get('/customers/add', function (request, reply) {
+  const { stripe } = fastify
+  const email = 'customer@exemple.com'
+
+  // We create a new customer using Stripe API
+  stripe.customers.create({ email })
+    .then(customers => {
+      reply
+        .code(201)
+        .send({
+          status: 'ok',
+          message: `customer ${email} succesfully added`,
+          customers
+        })
+    })
+    .catch(errors => {
+      reply
+        .code(500)
+        .send(errors)
+    })
+})
+
+fastify.listen(3000, function (err) {
+  if (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
+})
+```
 
 ### Options
 
@@ -142,7 +179,7 @@ fastify.get('/customers/prod/add', async (request, reply) => {
     // We create a new customer using the singular Stripe prod instance
     // This instance has the default request timeout of 2 minutes
     // and uses a Stripe production API key
-    const customers = await stripe['prod'].customers.create({ email })
+    const customers = await stripe.prod.customers.create({ email })
 
     reply.code(201)
     return {
@@ -177,7 +214,7 @@ fastify.stripe.setTimeout(20000); // in ms (this is 20 seconds)
 
 * `version` **[ optional ]**: It is important for you to check what version of the Stripe REST API you're currently consuming ([via the dashboard](https://manage.stripe.com/account/apikeys)). You can explicitly set the version you wish to use like so: `{ version: '2019-02-19' }`. You can later change this with [`setApiVersion()`](https://github.com/stripe/stripe-node/wiki/REST-API-Version) method.
 ```js
-fastify.stripe.setApiVersion('2019-02-19'); 
+fastify.stripe.setApiVersion('2019-02-19');
 ```
 *__Note__: You don't need to set a version explicitly. If you don't set it the Stripe REST API will use your account's default, which you can view under your dashboard (Account Settings » API Keys). Setting a version explicitly does not affect your account's default version. It'll only affect the API you consume through that singular stripe instance.*
 
