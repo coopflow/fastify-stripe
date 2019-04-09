@@ -212,7 +212,7 @@ fastify.stripe.setMaxNetworkRetries(1)
 fastify.stripe.setTimeout(20000); // in ms (this is 20 seconds)
 ```
 
-* `version` **[ optional ]**: It is important for you to check what version of the Stripe REST API you're currently consuming ([via the dashboard](https://manage.stripe.com/account/apikeys)). You can explicitly set the version you wish to use like so: `{ version: '2019-02-19' }`. You can later change this with [`setApiVersion()`](https://github.com/stripe/stripe-node/wiki/REST-API-Version) method.
+* `version` **[ optional ]**: It is important for you to check what version of the Stripe REST API you're currently consuming ([via the dashboard](https://manage.stripe.com/account/apikeys)). You can explicitly set the version you wish to use like so: `{ version: '2019-02-19' }`. You can later change this with stripe API [`setApiVersion()`](https://github.com/stripe/stripe-node/wiki/REST-API-Version) method.
 ```js
 fastify.stripe.setApiVersion('2019-02-19');
 ```
