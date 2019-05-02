@@ -36,7 +36,7 @@ function fastifyStripe (fastify, options, next) {
     }
 
     if (fastify.stripe[name]) {
-      return next(new Error(`Stripe '${name}' instance name as already been registered`))
+      return next(new Error(`Stripe '${name}' instance name has already been registered`))
     }
 
     fastify.stripe[name] = stripe
