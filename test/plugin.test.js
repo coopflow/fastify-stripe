@@ -149,7 +149,7 @@ test('fastify.stripe.test should throw with duplicate connection names', t => {
     })
 
   fastify.ready(errors => {
-    t.is(errors.message, `Stripe '${name}' instance name as already been registered`)
+    t.is(errors.message, `Stripe '${name}' instance name has already been registered`)
   })
 })
 
