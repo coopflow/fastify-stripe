@@ -165,6 +165,39 @@ test('Should throw if registered without an API key', t => {
   })
 })
 
+test('Should not throw if registered within different scopes (with and without named instances)', t => {
+  t.plan(2)
+
+  const fastify = Fastify()
+
+  fastify.register(function scopeOne (instance, opts, next) {
+    instance.register(fastifyStripe, {
+      api_key: process.env.STRIPE_TEST_API_KEY
+    })
+
+    next()
+  })
+
+  fastify.register(function scopeTwo (instance, opts, next) {
+    instance.register(fastifyStripe, {
+      api_key: process.env.STRIPE_TEST_API_KEY,
+      name: 'test'
+    })
+
+    instance.register(fastifyStripe, {
+      api_key: process.env.STRIPE_TEST_API_KEY,
+      name: 'anotherTest'
+    })
+
+    next()
+  })
+
+  fastify.ready(errors => {
+    t.error(errors)
+    t.is(errors, null)
+  })
+})
+
 test('Should throw when trying to register multiple instances without giving a name', t => {
   t.plan(1)
 
