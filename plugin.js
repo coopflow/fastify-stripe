@@ -4,7 +4,7 @@ const fp = require('fastify-plugin')
 
 function fastifyStripe (fastify, options, next) {
   if (!options.api_key) {
-    next(new Error('You must provide a Stripe API key'))
+    return next(new Error('You must provide a Stripe API key'))
   }
 
   const stripe = require('stripe')(options.api_key)
@@ -42,7 +42,7 @@ function fastifyStripe (fastify, options, next) {
     fastify.stripe[name] = stripe
   } else {
     if (fastify.stripe) {
-      next(new Error('fastify-stripe has already been registered'))
+      return next(new Error('fastify-stripe has already been registered'))
     } else {
       fastify.decorate('stripe', stripe)
     }
