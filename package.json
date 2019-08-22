@@ -39,7 +39,7 @@
     "dotenv": "^7.0.0",
     "fastify": "^2.5.0",
     "snazzy": "^8.0.0",
-    "standard": "^13.0.1",
+    "standard": "^14.0.0",
     "stripe": "*",
     "tap": "^12.7.0"
   },
