@@ -111,7 +111,7 @@ test('Should create a new stripe customer with multiple named Stripe instance', 
     t.ok(fastify.stripe)
     t.ok(fastify.stripe.test.customers)
 
-    fastify.stripe['test'].customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
+    fastify.stripe.test.customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
       if (err) {
         t.fail()
       }
@@ -212,6 +212,6 @@ test('Should throw when trying to register multiple instances without giving a n
     })
 
   fastify.ready(errors => {
-    t.is(errors.message, `fastify-stripe has already been registered`)
+    t.is(errors.message, 'fastify-stripe has already been registered')
   })
 })
