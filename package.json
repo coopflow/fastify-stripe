@@ -4,16 +4,16 @@
   "description": "Stripe Node.js Library instance initialization and encapsulation in fastify framework",
   "main": "plugin.js",
   "scripts": {
+    "coverage": "npm run unit -- --cov --coverage-report=html",
+    "coveralls": "npm run unit -- --cov",
     "lint": "npm run lint:standard",
     "lint:standard": "standard --verbose | snazzy",
-    "unit": "tap -J test/plugin.test.js",
-    "unit:report": "tap -J test/plugin.test.js --cov --coverage-report=html --coverage-report=cobertura | tee out.tap",
-    "unit:junit": "tap-mocha-reporter xunit < out.tap > test/junit-testresults.xml",
-    "test:report": "npm run lint && npm run unit:report",
     "test": "npm run lint && npm run unit",
-    "coverage": "npm run unit -- --cov --coverage-report=html",
-    "coverage:lcov": "npm run unit -- --cov --coverage-report=lcov --no-browser",
-    "coveralls": "npm run unit -- --cov"
+    "test:ci": "npm run unit -- --cov --coverage-report=lcov --no-browser",
+    "test:report": "npm run lint && npm run unit:report",
+    "unit": "tap -J test/plugin.test.js",
+    "unit:junit": "tap-mocha-reporter xunit < out.tap > test/junit-testresults.xml",
+    "unit:report": "tap -J test/plugin.test.js --cov --coverage-report=html --coverage-report=cobertura | tee out.tap"
   },
   "repository": {
     "type": "git",
