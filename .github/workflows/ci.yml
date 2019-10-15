@@ -1,0 +1,41 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [6, 8, 10, 12]
+    
+    steps:
+    - uses: actions/checkout@v1
+      
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      run: |
+        npm install
+
+    - name: Run tests & generate coverage
+      run: |
+        npm run lint
+        npm run coverage:lcov
+        
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-actions@master
+      with:
+        github-token: ${{ secrets.COVERALLS_TOKEN }}
+        parallel: true
+        
+    - name: Coveralls Finished
+      uses: coverallsapp/github-actions@master
+      with:
+        github-token: ${{ secrets.COVERALLS_TOKEN }}
+        parallel-finished: true
