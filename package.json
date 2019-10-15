@@ -12,6 +12,7 @@
     "test:report": "npm run lint && npm run unit:report",
     "test": "npm run lint && npm run unit",
     "coverage": "npm run unit -- --cov --coverage-report=html",
+    "coverage:lcov": "npm run unit -- --cov --coverage-report=lcov --no-browser",
     "coveralls": "npm run unit -- --cov"
   },
   "repository": {
