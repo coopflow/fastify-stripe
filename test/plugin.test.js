@@ -8,15 +8,16 @@ const fastifyStripe = require('../plugin')
 require('dotenv').config()
 
 test('fastify.stripe namespace should exist', t => {
-  t.plan(7)
+  t.plan(8)
 
   const fastify = Fastify()
 
   fastify.register(fastifyStripe, {
-    api_key: process.env.STRIPE_TEST_API_KEY,
+    apiKey: process.env.STRIPE_TEST_API_KEY,
     maxNetworkRetries: 3,
     timeout: 20000,
-    version: '2019-02-19'
+    apiVersion: '2019-02-19',
+    port: 8080
   })
 
   fastify.ready(errors => {
@@ -29,6 +30,7 @@ test('fastify.stripe namespace should exist', t => {
     t.strictEqual(fastify.stripe._api.maxNetworkRetries, 3)
     t.strictEqual(fastify.stripe._api.timeout, 20000)
     t.strictEqual(fastify.stripe._api.version, '2019-02-19')
+    t.strictEqual(fastify.stripe._api.port, 8080)
 
     fastify.close()
   })
@@ -40,7 +42,7 @@ test('fastify.stripe.test namespace should exist', t => {
   const fastify = Fastify()
 
   fastify.register(fastifyStripe, {
-    api_key: process.env.STRIPE_TEST_API_KEY,
+    apiKey: process.env.STRIPE_TEST_API_KEY,
     name: 'test'
   })
 
@@ -62,10 +64,10 @@ test('Should create a new stripe customer with a singular Stripe instance', t =>
   const fastify = Fastify()
 
   fastify.register(fastifyStripe, {
-    api_key: process.env.STRIPE_TEST_API_KEY,
+    apiKey: process.env.STRIPE_TEST_API_KEY,
     maxNetworkRetries: 3,
     timeout: 20000,
-    version: '2019-02-19'
+    apiVersion: '2019-02-19'
   })
 
   fastify.ready(errors => {
@@ -96,11 +98,11 @@ test('Should create a new stripe customer with multiple named Stripe instance', 
   fastify
     .register(fastifyStripe, {
       name: 'prod',
-      api_key: process.env.STRIPE_TEST_API_KEY
+      apiKey: process.env.STRIPE_TEST_API_KEY
     })
     .register(fastifyStripe, {
       name: 'test',
-      api_key: process.env.STRIPE_TEST_API_KEY,
+      apiKey: process.env.STRIPE_TEST_API_KEY,
       maxNetworkRetries: 3,
       timeout: 20000
     })
@@ -140,11 +142,11 @@ test('fastify.stripe.test should throw with duplicate connection names', t => {
 
   fastify
     .register(fastifyStripe, {
-      api_key: process.env.STRIPE_TEST_API_KEY,
+      apiKey: process.env.STRIPE_TEST_API_KEY,
       name
     })
     .register(fastifyStripe, {
-      api_key: process.env.STRIPE_TEST_API_KEY,
+      apiKey: process.env.STRIPE_TEST_API_KEY,
       name
     })
 
@@ -172,7 +174,7 @@ test('Should not throw if registered within different scopes (with and without n
 
   fastify.register(function scopeOne (instance, opts, next) {
     instance.register(fastifyStripe, {
-      api_key: process.env.STRIPE_TEST_API_KEY
+      apiKey: process.env.STRIPE_TEST_API_KEY
     })
 
     next()
@@ -180,12 +182,12 @@ test('Should not throw if registered within different scopes (with and without n
 
   fastify.register(function scopeTwo (instance, opts, next) {
     instance.register(fastifyStripe, {
-      api_key: process.env.STRIPE_TEST_API_KEY,
+      apiKey: process.env.STRIPE_TEST_API_KEY,
       name: 'test'
     })
 
     instance.register(fastifyStripe, {
-      api_key: process.env.STRIPE_TEST_API_KEY,
+      apiKey: process.env.STRIPE_TEST_API_KEY,
       name: 'anotherTest'
     })
 
@@ -205,10 +207,10 @@ test('Should throw when trying to register multiple instances without giving a n
 
   fastify
     .register(fastifyStripe, {
-      api_key: process.env.STRIPE_TEST_API_KEY
+      apiKey: process.env.STRIPE_TEST_API_KEY
     })
     .register(fastifyStripe, {
-      api_key: process.env.STRIPE_TEST_API_KEY
+      apiKey: process.env.STRIPE_TEST_API_KEY
     })
 
   fastify.ready(errors => {

@@ -3,32 +3,26 @@
 const fp = require('fastify-plugin')
 
 function fastifyStripe (fastify, options, next) {
-  if (!options.api_key) {
+  if (!options.apiKey) {
     return next(new Error('You must provide a Stripe API key'))
-  }
-
-  const stripe = require('stripe')(options.api_key)
-
-  stripe.setAppInfo({
-    name: 'fastify-stripe',
-    url: 'https://github.com/coopflow/fastify-stripe',
-    version: require('./package.json').version
-  })
-
-  if (options.maxNetworkRetries) {
-    stripe.setMaxNetworkRetries(options.maxNetworkRetries)
-  }
-
-  if (options.timeout) {
-    stripe.setTimeout(options.timeout)
-  }
-
-  if (options.version) {
-    stripe.setApiVersion(options.version)
   }
 
   const name = options.name
   delete options.name
+
+  const config = Object.assign(
+    {
+      appInfo: {
+        name: 'fastify-stripe',
+        url: 'https://github.com/coopflow/fastify-stripe',
+        version: require('./package.json').version
+      }
+    },
+    options
+  )
+  delete config.apiKey
+
+  const stripe = require('stripe')(options.apiKey, config)
 
   if (name) {
     if (!fastify.stripe) {
@@ -52,6 +46,6 @@ function fastifyStripe (fastify, options, next) {
 }
 
 module.exports = fp(fastifyStripe, {
-  fastify: '>=1.1.0',
+  fastify: '>=2.11.0',
   name: 'fastify-stripe'
 })
