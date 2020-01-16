@@ -24,7 +24,7 @@ The package needs to be added to your project with `register` and you must at le
 const fastify = require('fastify')({ logger: true })
 
 fastify.register(require('fastify-stripe'), {
-  api_key: 'sk_test_...'
+  apiKey: 'sk_test_...'
 })
 
 fastify.get('/customers/add', async (request, reply) => {
@@ -55,50 +55,12 @@ fastify.listen(3000, err => {
 })
 ```
 
-or with versions of Node.js prior to 7.9:
-```js
-const fastify = require('fastify')({ logger: true })
-
-fastify.register(require('fastify-stripe'), {
-  api_key: 'sk_test_...'
-})
-
-fastify.get('/customers/add', function (request, reply) {
-  const { stripe } = fastify
-  const email = 'customer@exemple.com'
-
-  // We create a new customer using Stripe API
-  stripe.customers.create({ email }, function (err, customers) {
-    if (err) {
-      reply
-        .code(500)
-        .send(errors)
-    }
-
-    reply
-      .code(201)
-      .send({
-        status: 'ok',
-        message: `customer ${email} succesfully added`,
-        customers
-      })
-  })
-})
-
-fastify.listen(3000, function (err) {
-  if (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
-})
-```
-
 and it works using `Promises` too:
 ```js
 const fastify = require('fastify')({ logger: true })
 
 fastify.register(require('fastify-stripe'), {
-  api_key: 'sk_test_...'
+  apiKey: 'sk_test_...'
 })
 
 fastify.get('/customers/add', function (request, reply) {
@@ -133,7 +95,7 @@ fastify.listen(3000, function (err) {
 
 ### Options
 
-* `api_key` **[ required ]**: Your account's secret key wich is available in your [Stripe Dashboard](https://dashboard.stripe.com/account/apikeys)
+* `apiKey` **[ required ]**: Your account's secret key wich is available in your [Stripe Dashboard](https://dashboard.stripe.com/account/apikeys)
 
 
 * `name` **[ optional ]**: Through this option `fastify-stripe` lets you define multiple Stripe singular instances (with different options parameters if you wish) that you can later use in your application.
@@ -142,12 +104,12 @@ const fastify = require('fastify')({ logger: true })
 
 fastify
   .register(require('fastify-stripe'), {
-    api_key: 'sk_test_...',
+    apiKey: 'sk_test_...',
     name: 'test',
-    timeout: 240000
+    timeout: 240000 // in ms (this is 24 seconds)
   })
   .register(require('fastify-stripe'), {
-    api_key: 'sk_prod_...',
+    apiKey: 'sk_prod_...',
     name: 'prod'
   })
 
@@ -202,22 +164,38 @@ fastify.listen(3000, err => {
 })
 ```
 
-* `maxNetworkRetries` **[ optional ]**: Automatic network retries can be enabled with setMaxNetworkRetries. This will retry requests `n` times with exponential backoff if they fail due to an intermittent network problem. Idempotency keys are added where appropriate to prevent duplication. You can later change this with Stripe API [`setMaxNetworkRetries()`](https://github.com/stripe/stripe-node#network-retries) method.
+* `maxNetworkRetries` **[ optional ]**: Automatic network retries can be enabled with setMaxNetworkRetries. This will retry requests `n` times with exponential backoff if they fail due to an intermittent network problem. Idempotency keys are added where appropriate to prevent duplication. You can later change this on a per-request basis with the new Stripe API configuration object property [`maxNetworkRetries`](https://github.com/stripe/stripe-node#network-retries).
 ```js
-// Retry a request once before giving up
-fastify.stripe.setMaxNetworkRetries(1)
+// Retry this request once before giving up
+fastify.stripe.customers.create(
+  {
+    email: 'customer@example.com'
+  },
+  {
+    maxNetworkRetries: 1
+  }
+)
 ```
 
-* `timeout` **[ optional ]**: The request timeout is configurable and must be expressed in `ms`. By default [Stripe Node.js Library](https://github.com/stripe/stripe-node) uses Node's default of 120 seconds (`{ timeout: 120000 }`). You can later change this with Stripe API [`setTimeout()`](https://github.com/stripe/stripe-node#configuring-timeout) method.
+* `timeout` **[ optional ]**: The request timeout is configurable and must be expressed in `ms`. By default [Stripe Node.js Library](https://github.com/stripe/stripe-node) uses Node's default of 120 seconds (`{ timeout: 120000 }`). You can later change this on a per-request basis with the new Stripe API configuration object property [`timeout`](https://github.com/stripe/stripe-node#configuring-timeout).
 ```js
-fastify.stripe.setTimeout(20000); // in ms (this is 20 seconds)
+fastify.stripe.customers.create(
+  {
+    email: 'customer@example.com'
+  },
+  {
+    timeout: 20000 // in ms (this is 20 seconds)
+  }
+)
 ```
 
-* `version` **[ optional ]**: It is important for you to check what version of the Stripe REST API you're currently consuming ([via the dashboard](https://manage.stripe.com/account/apikeys)). You can explicitly set the version you wish to use like so: `{ version: '2019-02-19' }`. You can later change this with stripe API [`setApiVersion()`](https://github.com/stripe/stripe-node/wiki/REST-API-Version) method.
+* `apiVersion` **[ optional ]**: It is important for you to check what version of the Stripe REST API you're currently consuming ([via the dashboard](https://manage.stripe.com/account/apikeys)). You can explicitly set the version you wish to use like so: `{ apiVersion: '2019-02-19' }`. You can later change this on a per-request basis with the new Stripe API configuration object property [`apiVersion`](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v8#mark-all-setter-methods-as-deprecated-emit-warnings).
 ```js
-fastify.stripe.setApiVersion('2019-02-19');
+fastify.stripe.customers.list({ apiVersion: '2019-02-19' })
 ```
 *__Note__: You don't need to set a version explicitly. If you don't set it the Stripe REST API will use your account's default, which you can view under your dashboard (Account Settings » API Keys). Setting a version explicitly does not affect your account's default version. It'll only affect the API you consume through that singular stripe instance.*
+
+*You can see the other options in [Node Stripe config object initialization documentation](https://github.com/stripe/stripe-node#initialize-with-config-object).*
 
 ## Documentation
 
