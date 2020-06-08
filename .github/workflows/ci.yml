@@ -8,10 +8,11 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [10, 12, 13]
+        node-version: [10.x, 12.x, 14.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
       
     - name: Use Node.js
       uses: actions/setup-node@v1
@@ -20,7 +21,7 @@ jobs:
 
     - name: Install
       run: |
-        npm install
+        npm install --ignore-scripts
 
     - name: Run tests & generate coverage
       run: |
