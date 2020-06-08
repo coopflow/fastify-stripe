@@ -196,7 +196,7 @@ test('Should not throw if registered within different scopes (with and without n
 
   fastify.ready(errors => {
     t.error(errors)
-    t.is(errors, null)
+    t.is(errors, undefined)
   })
 })
 
