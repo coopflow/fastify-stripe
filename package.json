@@ -36,16 +36,16 @@
     "node": ">=10"
   },
   "devDependencies": {
-    "coveralls": "^3.0.9",
+    "coveralls": "^3.1.0",
     "dotenv": "^8.2.0",
-    "fastify": "^2.11.0",
+    "fastify": "^3.0.0-rc.3",
     "snazzy": "^8.0.0",
-    "standard": "^14.3.1",
+    "standard": "^14.3.4",
     "stripe": "*",
-    "tap": "^14.10.6"
+    "tap": "^14.10.7"
   },
   "dependencies": {
-    "fastify-plugin": "^1.6.0"
+    "fastify-plugin": "^1.6.1"
   },
   "peerDependencies": {
     "stripe": ">=8.0.0"
