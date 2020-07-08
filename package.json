@@ -45,7 +45,7 @@
     "tap": "^14.10.7"
   },
   "dependencies": {
-    "fastify-plugin": "^1.6.1"
+    "fastify-plugin": "^2.0.0"
   },
   "peerDependencies": {
     "stripe": ">=8.0.0"
