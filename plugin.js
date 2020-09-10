@@ -1,6 +1,8 @@
 'use strict'
 
 const fp = require('fastify-plugin')
+const fs = require('fs')
+const path = require('path')
 
 function fastifyStripe (fastify, options, next) {
   if (!options.apiKey) {
@@ -15,7 +17,7 @@ function fastifyStripe (fastify, options, next) {
       appInfo: {
         name: 'fastify-stripe',
         url: 'https://github.com/coopflow/fastify-stripe',
-        version: require('./package.json').version
+        version: JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
       }
     },
     options
