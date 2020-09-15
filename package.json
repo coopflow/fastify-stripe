@@ -8,6 +8,7 @@
     "coveralls": "npm run unit -- --cov",
     "lint": "npm run lint:standard",
     "lint:standard": "standard --verbose | snazzy",
+    "lint:standard-fix": "standard --fix | snazzy",
     "test": "npm run lint && npm run unit",
     "test:ci": "npm run unit -- --cov --coverage-report=lcov --no-browser",
     "test:report": "npm run lint && npm run unit:report",
@@ -36,15 +37,15 @@
     "node": ">=10"
   },
   "dependencies": {
-    "fastify-plugin": "^2.3.3"
+    "fastify-plugin": "^2.3.4"
   },
   "devDependencies": {
     "coveralls": "^3.1.0",
     "dotenv": "^8.2.0",
-    "fastify": "^3.3.0",
+    "fastify": "^3.4.1",
     "snazzy": "^8.0.0",
     "standard": "^14.3.4",
-    "stripe": "^8.90.0",
+    "stripe": "^8.96.0",
     "tap": "^14.10.8"
   },
   "peerDependencies": {

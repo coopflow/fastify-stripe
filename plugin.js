@@ -1,28 +1,28 @@
 'use strict'
 
 const fp = require('fastify-plugin')
+const fs = require('fs')
+const path = require('path')
 
 function fastifyStripe (fastify, options, next) {
-  if (!options.apiKey) {
+  const { apiKey, name, ...stripeOptions } = options
+
+  if (!apiKey) {
     return next(new Error('You must provide a Stripe API key'))
   }
-
-  const name = options.name
-  delete options.name
 
   const config = Object.assign(
     {
       appInfo: {
         name: 'fastify-stripe',
         url: 'https://github.com/coopflow/fastify-stripe',
-        version: require('./package.json').version
+        version: JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'))).version
       }
     },
-    options
+    stripeOptions
   )
-  delete config.apiKey
 
-  const stripe = require('stripe')(options.apiKey, config)
+  const stripe = require('stripe')(apiKey, config)
 
   if (name) {
     if (!fastify.stripe) {
