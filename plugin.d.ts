@@ -18,9 +18,9 @@ export interface FastifyStripe {
 
 // Most importantly, use declaration merging to add the custom property to the Fastify type system
 declare module 'fastify' {
- interface FastifyInstance {
-   stripe: FastifyStripe;
- }
+  interface FastifyInstance {
+    stripe: FastifyStripe;
+  }
 }
 
 // fastify-plugin automatically adds named export, so be sure to add also this type
