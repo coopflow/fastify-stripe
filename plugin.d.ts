@@ -1,24 +1,28 @@
-import { FastifyPluginCallback } from 'fastify'
-import Stripe from 'stripe'
+import { FastifyPluginCallback } from 'fastify';
+import Stripe from 'stripe';
 
-interface FastifyStripeOptions extends Omit<Stripe.StripeConfig, "appInfo"> {
+export type FastifyStripeOptions = {
+  /**
+   * Stripe API Key
+   *
+   * @docs https://stripe.com/docs/api/authentication
+   * @docs https://stripe.com/docs/keys
+   */
   apiKey: string;
+
+  /**
+   * fastify-stripe instance name
+   */
   name?: string;
-}
+} & Omit<Stripe.StripeConfig, "appInfo">;
 
-export interface FastifyStripeNamedInstance {
-  (name: string): Stripe;
-}
-
-export interface FastifyStripe {
-  stripe: Stripe | FastifyStripeNamedInstance;
-}
+export type FastifyStripeNamedInstance = { [name: string]: Stripe };
 
 declare module 'fastify' {
   interface FastifyInstance {
-    stripe: FastifyStripe;
+    stripe: FastifyStripeNamedInstance | Stripe;
   }
 }
 
-export const FastifyStripePlugin: FastifyPluginCallback<FastifyStripeOptions>
-export default FastifyStripePlugin
+export const FastifyStripePlugin: FastifyPluginCallback<FastifyStripeOptions>;
+export default FastifyStripePlugin;
