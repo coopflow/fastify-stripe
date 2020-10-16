@@ -37,7 +37,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "fastify-plugin": "^2.3.4"
+    "fastify-plugin": "^3.0.0"
   },
   "devDependencies": {
     "coveralls": "^3.1.0",
