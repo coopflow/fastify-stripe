@@ -194,8 +194,8 @@ fastify.stripe.customers.list({ apiVersion: '2020-08-27' })
 ```
 *__Note__: You don't need to set a version explicitly. If you don't set it the Stripe REST API will use your account's default, which you can view under your dashboard (Account Settings » API Keys). Setting a version explicitly does not affect your account's default version. It'll only affect the API you consume through that singular stripe instance.*
 
-*__Note for TypeScript users__: If you are a TypeScript user, we recommend upgrading your account's API Version to the latest version.
-If you wish to remain on your account's default API version, you may pass `null` or another version instead of the latest version, and add a `@ts-ignore` comment here and anywhere the types differ between API versions.*
+*__Note for TypeScript users__: If you are a TypeScript user, follow [Stripe Node.js Library](https://github.com/stripe/stripe-node) maintainers recommendations: "we recommend upgrading your account's API Version to the latest version.
+If you wish to remain on your account's default API version, you may pass `null` or another version instead of the latest version, and add a `@ts-ignore` comment here and anywhere the types differ between API versions."*
 
 *You can see the other options in [Node Stripe config object initialization documentation](https://github.com/stripe/stripe-node#initialize-with-config-object).*
 
