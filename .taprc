@@ -2,5 +2,4 @@ esm: false
 ts: false
 jsx: false
 flow: false
-jobs: 1
 coverage: true
