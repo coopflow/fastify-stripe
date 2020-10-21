@@ -13,7 +13,8 @@
     "test": "npm run lint && npm run unit",
     "test:ci": "npm run unit -- --cov --coverage-report=lcov --no-browser",
     "test:report": "npm run lint && npm run unit:report",
-    "unit": "tap -J test/plugin.test.js",
+    "typescript": "tsd",
+    "unit": "tap --100 test/plugin.test.js && tsd",
     "unit:junit": "tap-mocha-reporter xunit < out.tap > test/junit-testresults.xml",
     "unit:report": "tap -J test/plugin.test.js --cov --coverage-report=html --coverage-report=cobertura | tee out.tap"
   },
@@ -43,13 +44,18 @@
   "devDependencies": {
     "coveralls": "^3.1.0",
     "dotenv": "^8.2.0",
-    "fastify": "^3.4.1",
+    "fastify": "^3.7.0",
     "snazzy": "^8.0.0",
     "standard": "^14.3.4",
-    "stripe": "^8.96.0",
-    "tap": "^14.10.8"
+    "stripe": "^8.115.0",
+    "tap": "^14.10.8",
+    "tsd": "^0.13.1",
+    "typescript": "^4.0.3"
   },
   "peerDependencies": {
     "stripe": ">=8.0.0"
+  },
+  "tsd": {
+    "directory": "test"
   }
 }
