@@ -56,6 +56,6 @@
     "stripe": ">=8.0.0"
   },
   "tsd": {
-    "directory": "test"
+    "directory": "test/types"
   }
 }
