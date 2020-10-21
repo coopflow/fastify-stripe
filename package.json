@@ -14,7 +14,7 @@
     "test:ci": "npm run unit -- --cov --coverage-report=lcov --no-browser",
     "test:report": "npm run lint && npm run unit:report",
     "typescript": "tsd",
-    "unit": "tap --100 test/plugin.test.js && tsd",
+    "unit": "tap test/plugin.test.js && tsd",
     "unit:junit": "tap-mocha-reporter xunit < out.tap > test/junit-testresults.xml",
     "unit:report": "tap -J test/plugin.test.js --cov --coverage-report=html --coverage-report=cobertura | tee out.tap"
   },
