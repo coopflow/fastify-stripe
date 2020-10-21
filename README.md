@@ -188,11 +188,14 @@ fastify.stripe.customers.create(
 )
 ```
 
-* `apiVersion` **[ optional ]**: It is important for you to check what version of the Stripe REST API you're currently consuming ([via the dashboard](https://manage.stripe.com/account/apikeys)). You can explicitly set the version you wish to use like so: `{ apiVersion: '2019-02-19' }`. You can later change this on a per-request basis with the new Stripe API configuration object property [`apiVersion`](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v8#mark-all-setter-methods-as-deprecated-emit-warnings).
+* `apiVersion` **[ optional ]**: It is important for you to check what version of the Stripe REST API you're currently consuming ([via the dashboard](https://manage.stripe.com/account/apikeys)). You can explicitly set the version you wish to use like so: `{ apiVersion: '2020-08-27' }`. You can later change this on a per-request basis with the new Stripe API configuration object property [`apiVersion`](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v8#mark-all-setter-methods-as-deprecated-emit-warnings).
 ```js
-fastify.stripe.customers.list({ apiVersion: '2019-02-19' })
+fastify.stripe.customers.list({ apiVersion: '2020-08-27' })
 ```
 *__Note__: You don't need to set a version explicitly. If you don't set it the Stripe REST API will use your account's default, which you can view under your dashboard (Account Settings » API Keys). Setting a version explicitly does not affect your account's default version. It'll only affect the API you consume through that singular stripe instance.*
+
+*__Note for TypeScript users__: If you are a TypeScript user, follow [Stripe Node.js Library](https://github.com/stripe/stripe-node) maintainers recommendations: "we recommend upgrading your account's API Version to the latest version.
+If you wish to remain on your account's default API version, you may pass `null` or another version instead of the latest version, and add a `@ts-ignore` comment here and anywhere the types differ between API versions."*
 
 *You can see the other options in [Node Stripe config object initialization documentation](https://github.com/stripe/stripe-node#initialize-with-config-object).*
 
