@@ -3,7 +3,7 @@
 const t = require('tap')
 const test = t.test
 const Fastify = require('fastify')
-const fastifyStripe = require('../plugin')
+const fastifyStripe = require('../../plugin')
 
 require('dotenv').config()
 
