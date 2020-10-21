@@ -4,6 +4,7 @@ cache:
   npm: false
 
 node_js:
+  - "15"
   - "14"
   - "12"
   - "10"
