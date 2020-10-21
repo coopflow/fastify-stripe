@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 /**
  * @docs https://github.com/coopflow/fastify-stripe/tree/types#options
  */
-export type FastifyStripeOptions = {
+export interface FastifyStripeOptions extends Omit<Stripe.StripeConfig, "appInfo"> {
   /**
    * Stripe API Key
    *
@@ -17,13 +17,17 @@ export type FastifyStripeOptions = {
    * fastify-stripe instance name
    */
   name?: string;
-} & Omit<Stripe.StripeConfig, "appInfo">;
+}
 
-export type FastifyStripeNamedInstance = { [name: string]: Stripe };
+export interface FastifyStripeNamedInstance {
+  [name: string]: Stripe;
+}
 
-declare module 'fastify' {
+export type FastifyStripe = FastifyStripeNamedInstance & Stripe;
+
+declare module "fastify" {
   interface FastifyInstance {
-    stripe: FastifyStripeNamedInstance & Stripe;
+    stripe: FastifyStripe;
   }
 }
 
