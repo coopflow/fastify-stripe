@@ -2,7 +2,7 @@ import { config } from 'dotenv'
 import Fastify from 'fastify'
 import Stripe from 'stripe'
 import { expectAssignable, expectNotType, expectType } from 'tsd'
-import fastifyStripe, { FastifyStripeNamedInstance } from '../plugin'
+import fastifyStripe, { FastifyStripeNamedInstance } from '../../plugin'
 
 const { parsed: env } = config()
 
