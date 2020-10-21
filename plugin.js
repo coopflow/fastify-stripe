@@ -46,6 +46,6 @@ function fastifyStripe (fastify, options, next) {
 }
 
 module.exports = fp(fastifyStripe, {
-  fastify: '>=3.x',
+  fastify: '>=2.11.0',
   name: 'fastify-stripe'
 })
