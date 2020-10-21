@@ -25,7 +25,6 @@ jobs:
 
     - name: Run tests & generate coverage
       run: |
-        npm run lint
         npm run test:ci
       env:
         STRIPE_TEST_API_KEY: ${{ secrets.STRIPE_TEST_API_KEY }}
