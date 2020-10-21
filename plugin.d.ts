@@ -1,6 +1,9 @@
 import { FastifyPluginCallback } from 'fastify';
 import Stripe from 'stripe';
 
+/**
+ * @docs https://github.com/coopflow/fastify-stripe/tree/types#options
+ */
 export type FastifyStripeOptions = {
   /**
    * Stripe API Key
@@ -20,7 +23,7 @@ export type FastifyStripeNamedInstance = { [name: string]: Stripe };
 
 declare module 'fastify' {
   interface FastifyInstance {
-    stripe: FastifyStripeNamedInstance | Stripe;
+    stripe: FastifyStripeNamedInstance & Stripe;
   }
 }
 
