@@ -2,7 +2,6 @@
 
 [![NPM version](https://img.shields.io/npm/v/fastify-stripe.svg?style=flat)](https://www.npmjs.com/package/fastify-stripe)
 [![GitHub CI](https://github.com/coopflow/fastify-stripe/workflows/GitHub%20CI/badge.svg)](https://github.com/coopflow/fastify-stripe/actions?workflow=GitHub+CI)
-[![Build Status](https://travis-ci.com/coopflow/fastify-stripe.svg?branch=master)](https://travis-ci.com/coopflow/fastify-stripe)
 [![Coverage Status](https://coveralls.io/repos/github/coopflow/fastify-stripe/badge.svg?branch=master)](https://coveralls.io/github/coopflow/fastify-stripe?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
