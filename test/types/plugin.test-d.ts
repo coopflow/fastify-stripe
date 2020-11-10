@@ -1,7 +1,7 @@
 import { config } from 'dotenv'
 import Fastify from 'fastify'
 import Stripe from 'stripe'
-import { expectAssignable, expectNotType, expectType } from 'tsd'
+import { expectAssignable, expectType } from 'tsd'
 import fastifyStripe, { FastifyStripeNamedInstance } from '../../plugin'
 
 const { parsed: env } = config()
@@ -18,7 +18,6 @@ app.register(fastifyStripe, {
 
 app.ready(() => {
   expectAssignable<Stripe>(app.stripe)
-  expectNotType<FastifyStripeNamedInstance>(app.stripe)
   expectType<Stripe.CustomersResource>(app.stripe.customers)
   expectType<Promise<Stripe.Response<Stripe.Customer>>>(
     app.stripe.customers.create({ email: 'demo@demo.tld' })
@@ -36,7 +35,6 @@ appOne.register(fastifyStripe, {
 
 appOne.ready(() => {
   expectAssignable<FastifyStripeNamedInstance>(appOne.stripe)
-  expectNotType<Stripe>(appOne.stripe)
   expectType<Stripe>(appOne.stripe.one)
   expectType<Stripe.CustomersResource>(appOne.stripe.one.customers)
   expectType<Promise<Stripe.Response<Stripe.Customer>>>(
