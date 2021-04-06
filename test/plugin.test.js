@@ -27,10 +27,10 @@ test('fastify.stripe namespace should exist', t => {
     t.ok(fastify.stripe.balance)
     t.ok(fastify.stripe.customers)
 
-    t.strictEqual(fastify.stripe._api.maxNetworkRetries, 3)
-    t.strictEqual(fastify.stripe._api.timeout, 20000)
-    t.strictEqual(fastify.stripe._api.version, '2019-02-19')
-    t.strictEqual(fastify.stripe._api.port, 8080)
+    t.equal(fastify.stripe._api.maxNetworkRetries, 3)
+    t.equal(fastify.stripe._api.timeout, 20000)
+    t.equal(fastify.stripe._api.version, '2019-02-19')
+    t.equal(fastify.stripe._api.port, 8080)
 
     fastify.close()
   })
@@ -82,7 +82,7 @@ test('Should create a new stripe customer with a singular Stripe instance', t =>
       }
 
       t.type(customers, 'object')
-      t.strictEqual(customers.object, 'customer')
+      t.equal(customers.object, 'customer')
       t.pass()
     })
 
@@ -118,14 +118,14 @@ test('Should create a new stripe customer with multiple named Stripe instance', 
         t.fail()
       }
       t.type(customers, 'object')
-      t.strictEqual(customers.object, 'customer')
+      t.equal(customers.object, 'customer')
       t.pass()
     })
 
     fastify.stripe.prod.customers.create({ email: 'demo@demo.tld' })
       .then(customers => {
         t.type(customers, 'object')
-        t.strictEqual(customers.object, 'customer')
+        t.equal(customers.object, 'customer')
         t.pass()
       })
       .catch(() => t.fail())
@@ -151,7 +151,7 @@ test('fastify.stripe.test should throw with duplicate connection names', t => {
     })
 
   fastify.ready(errors => {
-    t.is(errors.message, `Stripe '${name}' instance name has already been registered`)
+    t.equal(errors.message, `Stripe '${name}' instance name has already been registered`)
   })
 })
 
@@ -163,7 +163,7 @@ test('Should throw if registered without an API key', t => {
   fastify.register(fastifyStripe)
 
   fastify.ready(errors => {
-    t.is(errors.message, 'You must provide a Stripe API key')
+    t.equal(errors.message, 'You must provide a Stripe API key')
   })
 })
 
@@ -196,7 +196,7 @@ test('Should not throw if registered within different scopes (with and without n
 
   fastify.ready(errors => {
     t.error(errors)
-    t.is(errors, undefined)
+    t.equal(errors, undefined)
   })
 })
 
@@ -214,6 +214,6 @@ test('Should throw when trying to register multiple instances without giving a n
     })
 
   fastify.ready(errors => {
-    t.is(errors.message, 'fastify-stripe has already been registered')
+    t.equal(errors.message, 'fastify-stripe has already been registered')
   })
 })
