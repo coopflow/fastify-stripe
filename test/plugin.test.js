@@ -58,8 +58,8 @@ test('fastify.stripe.test namespace should exist', t => {
   })
 })
 
-test('Should create a new stripe customer with a singular Stripe instance', t => {
-  t.plan(6)
+test('Should create and then delete a new stripe customer with a singular Stripe instance', t => {
+  t.plan(10)
 
   const fastify = Fastify()
 
@@ -76,13 +76,24 @@ test('Should create a new stripe customer with a singular Stripe instance', t =>
     t.ok(fastify.stripe)
     t.ok(fastify.stripe.customers)
 
-    fastify.stripe.customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
+    fastify.stripe.customers.create({ email: 'demo@demo.tld' }, function (err, customer) {
       if (err) {
         t.fail()
       }
 
-      t.type(customers, 'object')
-      t.equal(customers.object, 'customer')
+      t.type(customer, 'object')
+      t.equal(customer.object, 'customer')
+
+      fastify.stripe.customers.del(customer.id, function (err, deletedCustomer) {
+        if (err) {
+          t.fail()
+        }
+
+        t.type(deletedCustomer, 'object')
+        t.equal(deletedCustomer.object, 'customer')
+        t.equal(deletedCustomer.deleted, true)
+        t.pass()
+      })
       t.pass()
     })
 
@@ -90,8 +101,8 @@ test('Should create a new stripe customer with a singular Stripe instance', t =>
   })
 })
 
-test('Should create a new stripe customer with multiple named Stripe instance', t => {
-  t.plan(9)
+test('Should create and then delete a new stripe customer with multiple named Stripe instance', t => {
+  t.plan(16)
 
   const fastify = Fastify()
 
@@ -113,19 +124,41 @@ test('Should create a new stripe customer with multiple named Stripe instance', 
     t.ok(fastify.stripe)
     t.ok(fastify.stripe.test.customers)
 
-    fastify.stripe.test.customers.create({ email: 'demo@demo.tld' }, function (err, customers) {
+    fastify.stripe.test.customers.create({ email: 'demo@demo.tld' }, function (err, customer) {
       if (err) {
         t.fail()
       }
-      t.type(customers, 'object')
-      t.equal(customers.object, 'customer')
+
+      t.type(customer, 'object')
+      t.equal(customer.object, 'customer')
+
+      fastify.stripe.test.customers.del(customer.id, function (err, deletedCustomer) {
+        if (err) {
+          t.fail()
+        }
+
+        t.type(deletedCustomer, 'object')
+        t.equal(deletedCustomer.object, 'customer')
+        t.equal(deletedCustomer.deleted, true)
+        t.pass()
+      })
+
       t.pass()
     })
 
     fastify.stripe.prod.customers.create({ email: 'demo@demo.tld' })
-      .then(customers => {
-        t.type(customers, 'object')
-        t.equal(customers.object, 'customer')
+      .then(customer => {
+        t.type(customer, 'object')
+        t.equal(customer.object, 'customer')
+
+        fastify.stripe.prod.customers.del(customer.id)
+          .then(deletedCustomer => {
+            t.type(deletedCustomer, 'object')
+            t.equal(deletedCustomer.object, 'customer')
+            t.equal(deletedCustomer.deleted, true)
+          })
+          .catch(() => t.fail())
+
         t.pass()
       })
       .catch(() => t.fail())
