@@ -44,13 +44,13 @@
   "devDependencies": {
     "coveralls": "^3.1.0",
     "dotenv": "^10.0.0",
-    "fastify": "^3.14.1",
+    "fastify": "^3.17.0",
     "snazzy": "^9.0.0",
-    "standard": "^16.0.0",
-    "stripe": "^8.142.0",
-    "tap": "^15.0.2",
+    "standard": "^16.0.3",
+    "stripe": "^8.154.0",
+    "tap": "^15.0.9",
     "tsd": "^0.17.0",
-    "typescript": "^4.2.3"
+    "typescript": "^4.3.2"
   },
   "peerDependencies": {
     "stripe": ">=8.0.0"
