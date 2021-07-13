@@ -42,15 +42,15 @@
     "fastify-plugin": "^3.0.0"
   },
   "devDependencies": {
-    "coveralls": "^3.1.0",
+    "coveralls": "^3.1.1",
     "dotenv": "^10.0.0",
-    "fastify": "^3.17.0",
+    "fastify": "^3.19.1",
     "snazzy": "^9.0.0",
     "standard": "^16.0.3",
-    "stripe": "^8.154.0",
+    "stripe": "^8.161.0",
     "tap": "^15.0.9",
     "tsd": "^0.17.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.5"
   },
   "peerDependencies": {
     "stripe": ">=8.0.0"
