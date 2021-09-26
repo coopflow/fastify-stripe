@@ -26,7 +26,7 @@ function fastifyStripe (fastify, options, next) {
 
   if (name) {
     if (!fastify.stripe) {
-      fastify.decorate('stripe', {})
+      fastify.decorate('stripe', Object.create(null))
     }
 
     if (fastify.stripe[name]) {
