@@ -44,10 +44,10 @@
   "devDependencies": {
     "coveralls": "^3.1.1",
     "dotenv": "^10.0.0",
-    "fastify": "^3.21.6",
+    "fastify": "^3.22.0",
     "snazzy": "^9.0.0",
     "standard": "^16.0.3",
-    "stripe": "^8.176.0",
+    "stripe": "^8.178.0",
     "tap": "^15.0.10",
     "tsd": "^0.17.0",
     "typescript": "^4.4.3"
