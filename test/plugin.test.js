@@ -1,7 +1,6 @@
 'use strict'
 
-const t = require('tap')
-const test = t.test
+const { test } = require('tap')
 const Fastify = require('fastify')
 const fastifyStripe = require('../plugin')
 
@@ -58,7 +57,7 @@ test('fastify.stripe.test namespace should exist', t => {
   })
 })
 
-test('Should create and then delete a new stripe customer with a singular Stripe instance', t => {
+test('fastify-stripe should create and then delete a new stripe customer with a singular Stripe instance', t => {
   t.plan(10)
 
   const fastify = Fastify()
@@ -101,7 +100,7 @@ test('Should create and then delete a new stripe customer with a singular Stripe
   })
 })
 
-test('Should create and then delete a new stripe customer with multiple named Stripe instance', t => {
+test('fastify-stripe should create and then delete a new stripe customer with multiple named Stripe instance', t => {
   t.plan(16)
 
   const fastify = Fastify()
@@ -188,7 +187,7 @@ test('fastify.stripe.test should throw with duplicate connection names', t => {
   })
 })
 
-test('Should throw if registered without an API key', t => {
+test('fastify-stripe should throw if registered without an API key', t => {
   t.plan(1)
 
   const fastify = Fastify()
@@ -200,7 +199,23 @@ test('Should throw if registered without an API key', t => {
   })
 })
 
-test('Should not throw if registered within different scopes (with and without named instances)', t => {
+test('fastify-stripe should throw when trying to register an instance with a reserved `name` keyword', t => {
+  t.plan(1)
+
+  const fastify = Fastify()
+  const name = 'customers'
+
+  fastify.register(fastifyStripe, {
+    apiKey: process.env.STRIPE_TEST_API_KEY,
+    name
+  })
+
+  fastify.ready(errors => {
+    t.equal(errors.message, `fastify-stripe '${name}' is a reserved keyword`)
+  })
+})
+
+test('fastify-stripe should not throw if registered within different scopes (with and without named instances)', t => {
   t.plan(2)
 
   const fastify = Fastify()
@@ -233,7 +248,7 @@ test('Should not throw if registered within different scopes (with and without n
   })
 })
 
-test('Should throw when trying to register multiple instances without giving a name', t => {
+test('fastify-stripe should throw when trying to register multiple instances without giving a name', t => {
   t.plan(1)
 
   const fastify = Fastify()

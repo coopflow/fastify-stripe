@@ -25,11 +25,11 @@ function fastifyStripe (fastify, options, next) {
   const stripe = require('stripe')(apiKey, config)
 
   if (name) {
-    if (!fastify.stripe) {
+    if (stripe[name]) {
+      return next(new Error(`fastify-stripe '${name}' is a reserved keyword`))
+    } else if (!fastify.stripe) {
       fastify.decorate('stripe', Object.create(null))
-    }
-
-    if (fastify.stripe[name]) {
+    } else if (Object.prototype.hasOwnProperty.call(fastify.stripe, name)) {
       return next(new Error(`Stripe '${name}' instance name has already been registered`))
     }
 
