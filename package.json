@@ -5,17 +5,15 @@
   "main": "plugin.js",
   "types": "plugin.d.ts",
   "scripts": {
-    "coverage": "npm run unit -- --cov --coverage-report=html",
-    "coveralls": "npm run unit -- --cov",
-    "lint": "standard --verbose | snazzy",
-    "lint:fix": "standard --fix | snazzy",
-    "test": "npm run lint && npm run unit",
-    "test:ci": "npm run lint && npm run unit -- --cov --coverage-report=lcov --no-browser && npm run test:typescript",
-    "test:report": "npm run lint && npm run unit:report",
+    "lint": "standard --verbose",
+    "lint:fix": "standard --fix",
+    "test": "npm run lint && npm run unit && npm run test:typescript",
+    "test:ci": "npm run unit:coverage && npm run test:typescript",
     "test:typescript": "tsd",
     "unit": "tap -J test/plugin.test.js",
-    "unit:report": "tap -J test/plugin.test.js --cov --coverage-report=html --coverage-report=cobertura | tee out.tap",
-    "unit:verbose": "tap -J test/plugin.test.js -Rspec"
+    "unit:coverage": "npm run unit -- --cov --coverage-report=lcovonly --no-browser",
+    "unit:report": "npm run unit -- --cov --coverage-report=html",
+    "unit:verbose": "npm run unit -- -Rspec"
   },
   "repository": {
     "type": "git",
