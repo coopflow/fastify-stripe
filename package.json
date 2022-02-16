@@ -5,17 +5,15 @@
   "main": "plugin.js",
   "types": "plugin.d.ts",
   "scripts": {
-    "coverage": "npm run unit -- --cov --coverage-report=html",
-    "coveralls": "npm run unit -- --cov",
-    "lint": "standard --verbose | snazzy",
-    "lint:fix": "standard --fix | snazzy",
-    "test": "npm run lint && npm run unit",
-    "test:ci": "npm run lint && npm run unit -- --cov --coverage-report=lcov --no-browser && npm run test:typescript",
-    "test:report": "npm run lint && npm run unit:report",
+    "lint": "standard --verbose",
+    "lint:fix": "standard --fix",
+    "test": "npm run lint && npm run unit && npm run test:typescript",
+    "test:ci": "npm run unit:coverage && npm run test:typescript",
     "test:typescript": "tsd",
     "unit": "tap -J test/plugin.test.js",
-    "unit:report": "tap -J test/plugin.test.js --cov --coverage-report=html --coverage-report=cobertura | tee out.tap",
-    "unit:verbose": "tap -J test/plugin.test.js -Rspec"
+    "unit:coverage": "npm run unit -- --cov --coverage-report=lcovonly --no-browser",
+    "unit:report": "npm run unit -- --cov --coverage-report=html",
+    "unit:verbose": "npm run unit -- -Rspec"
   },
   "repository": {
     "type": "git",
@@ -38,18 +36,17 @@
     "node": ">=10"
   },
   "dependencies": {
-    "fastify-plugin": "^3.0.0"
+    "fastify-plugin": "^3.0.1"
   },
   "devDependencies": {
     "coveralls": "^3.1.1",
     "dotenv": "^16.0.0",
-    "fastify": "^3.22.1",
-    "snazzy": "^9.0.0",
+    "fastify": "^3.27.1",
     "standard": "^16.0.4",
-    "stripe": "^8.184.0",
-    "tap": "^15.0.10",
-    "tsd": "^0.19.0",
-    "typescript": "^4.4.4"
+    "stripe": "^8.203.0",
+    "tap": "^15.1.6",
+    "tsd": "^0.19.1",
+    "typescript": "^4.5.5"
   },
   "peerDependencies": {
     "stripe": ">=8.0.0"
