@@ -39,13 +39,13 @@ fastify.get('/customers/add', async (request, reply) => {
       message: `customer ${email} succesfully added`,
       customers
     }
-  } catch (errors) {
+  } catch (err) {
     reply.code(500)
-    return errors
+    return err
   }
 })
 
-fastify.listen(3000, err => {
+fastify.listen(3000, (err) => {
   if (err) {
     fastify.log.error(err)
     process.exit(1)
@@ -67,7 +67,7 @@ fastify.get('/customers/add', function (request, reply) {
 
   // We create a new customer using Stripe API
   stripe.customers.create({ email })
-    .then(customers => {
+    .then((customers) => {
       reply
         .code(201)
         .send({
@@ -76,10 +76,10 @@ fastify.get('/customers/add', function (request, reply) {
           customers
         })
     })
-    .catch(errors => {
+    .catch((err) => {
       reply
         .code(500)
-        .send(errors)
+        .send(err)
     })
 })
 
@@ -104,7 +104,7 @@ fastify
   .register(require('fastify-stripe'), {
     apiKey: 'sk_test_...',
     name: 'test',
-    timeout: 240000 // in ms (this is 24 seconds)
+    timeout: 24000 // in ms (this is 24 seconds)
   })
   .register(require('fastify-stripe'), {
     apiKey: 'sk_prod_...',
@@ -127,9 +127,9 @@ fastify.get('/customers/test/add', async (request, reply) => {
       message: `customer ${email} succesfully added`,
       customers
     }
-  } catch (errors) {
+  } catch (err) {
     reply.code(500)
-    return errors
+    return err
   }
 
 fastify.get('/customers/prod/add', async (request, reply) => {
@@ -148,13 +148,13 @@ fastify.get('/customers/prod/add', async (request, reply) => {
       message: `customer ${email} succesfully added`,
       customers
     }
-  } catch (errors) {
+  } catch (err) {
     reply.code(500)
-    return errors
+    return err
   }
 })
 
-fastify.listen(3000, err => {
+fastify.listen(3000, (err) => {
   if (err) {
     fastify.log.error(err)
     process.exit(1)
